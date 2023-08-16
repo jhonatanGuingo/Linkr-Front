@@ -25,7 +25,7 @@ width:70%;
     padding: 20px;
     h1{
         font-size: 106px;
-        margin-left: 10%;
+        margin-left: 100px;
         line-height: 84px;
         letter-spacing: 0.05em;
         }
@@ -36,5 +36,5 @@ width:70%;
         line-height: 64px;
         text-align: start;
         margin-top: 10px;
-        margin-left: 10%;
+        margin-left: 100px;
     }`

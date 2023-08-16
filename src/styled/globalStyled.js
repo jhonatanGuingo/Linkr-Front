@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
         justify-content: center;
         align-items: center;
         gap: 15px;
-        width: 85%;
+        width: 800px;
         border-radius: 5px;
     }
 `
