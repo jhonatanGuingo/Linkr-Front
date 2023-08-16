@@ -12,11 +12,11 @@ export default function PhraseAuthPage() {
 }
 
 const Title = styled.div`
+width:70%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    width: 70%;
     height: 100%;
     color: #FFFFFF;
     background-color: #151515;
@@ -31,7 +31,7 @@ const Title = styled.div`
         }
     }
     h2{
-        width: 80%;
+        width: 450px;
         font-size: 43px;
         line-height: 64px;
         text-align: start;
