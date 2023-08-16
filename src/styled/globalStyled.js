@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 400;
     }
 
+    body{
+        background-color: #333333;
+    }
+
     input {
         font-size: 18px;
         height:20px;
