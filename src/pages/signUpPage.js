@@ -93,7 +93,7 @@ const Message = styled.div`
   font-size: 17px;
   line-height: 20px;
   text-decoration: underline;
-}`
+`
 
 const Button = styled.button`
 display: flex;

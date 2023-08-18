@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "../components/Header";
+import SideBarHashtags from "../components/sideBarHashtag";
 
 export default function TestPage() {
     const token = localStorage.getItem("token");
@@ -17,5 +18,7 @@ export default function TestPage() {
     return (
         <>
         <Header/>
+        <SideBarHashtags/>
+
         </>)
 }
