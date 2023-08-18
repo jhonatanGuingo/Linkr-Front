@@ -28,7 +28,6 @@ width:70%;
         margin-left: 100px;
         line-height: 84px;
         letter-spacing: 0.05em;
-        }
     }
     h2{
         width: 450px;

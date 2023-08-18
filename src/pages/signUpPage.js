@@ -47,24 +47,25 @@ export default function SingUpPage() {
         <>
             <SingUpContainer>
                 <PhraseAuthPage/>
-                <form>
-                    <input
+                <SignUpForm>
+                    <SignUpInput
                         placeholder="email"
                         type="email"
                         required value={email}
                         onChange={(e) => setEmail(e.target.value)} />
-                    <input
+                    <SignUpInput
                         placeholder="password"
                         type="password"
                         required value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <input
+                    <SignUpInput
                         placeholder="username"
                         type="name"
                         required value={userName}
                         onChange={(e) => setUserName(e.target.value)} />
-                    <input placeholder="picture url"
+                    <SignUpInput 
+                        placeholder="picture url"
                         type="url"
                         required value={image}
                         onChange={(e) => setImage(e.target.value)} />
@@ -72,7 +73,7 @@ export default function SingUpPage() {
                         Sign Up
                     </Button>
                     <Message onClick={getSignIn}>Switch back to log in</Message>
-                </form>
+                </SignUpForm>
             </SingUpContainer>
         </>
     )
@@ -84,8 +85,8 @@ const SingUpContainer = styled.section`
     height: 100vh;
     display: flex;
     flex-direction: row;
-   justify-content: center;
-   align-items: center;`
+    justify-content: center;
+    align-items: center;`
 
 const Message = styled.div`
   font-family: 'Lato', sans-serif;
@@ -93,6 +94,31 @@ const Message = styled.div`
   font-size: 17px;
   line-height: 20px;
   text-decoration: underline;
+`
+
+const SignUpForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 800px;
+    border-radius: 5px;
+`
+
+const SignUpInput = styled.input`
+    font-size: 18px;
+    height:20px;
+    width: 429px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 1px;
+    :focus {
+        border: 2px solid #ffb6b6;
+        margin: 0px;
+    }
 `
 
 const Button = styled.button`

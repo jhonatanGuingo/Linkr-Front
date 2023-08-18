@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes , Route} from "react-router-dom";
 import SingUpPage from "./pages/signUpPage.js";
 import SignInPage from "./pages/signInPage.js";
-import TestPage from "./pages/TestPage.js";
+import TimelinePage from "./pages/TimelinePage.js";
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
                 <Routes>
                     <Route path="/signup" element={<SingUpPage />} />
                     <Route path="/" element={<SignInPage />} />
-                    <Route path="/timeline" element={<TestPage />} />
+                    <Route path="/timeline" element={<TimelinePage />} />
                 </Routes>
             </BrowserRouter>
         </>

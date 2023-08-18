@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext.js";
 
 
 export default function SignInPage() {
-    const { saveToken } = useContext(AuthContext);
+    const { saveToken, saveImage } = useContext(AuthContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,6 +22,7 @@ export default function SignInPage() {
             try {
                 const promisse = await api.post('/signin', { email, password })
                 saveToken(promisse.data)
+                saveImage(promisse.data)
                 setIsLoading(false);
                 navigate("/timeline")
             } catch (error) {
@@ -46,14 +47,14 @@ export default function SignInPage() {
     return (
         <SingInContainer>
             <PhraseAuthPage />
-            <form>
-                <input
+            <SignInForm>
+                <SignInInput
                     placeholder="e-mail"
                     type="email"
                     required value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <input
+                <SignInInput
                     placeholder="password"
                     type="password"
                     required value={password}
@@ -63,7 +64,7 @@ export default function SignInPage() {
                     Sign In
                 </Button>
                 <Message onClick={getSignUp}>First time? Create an account!</Message>
-            </form>
+            </SignInForm>
         </SingInContainer>
     )
 }
@@ -83,6 +84,31 @@ color: #FFFFFF;
 font-size: 17px;
 line-height: 20px;
 text-decoration: underline;
+`
+
+const SignInForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 800px;
+    border-radius: 5px;
+`
+
+const SignInInput = styled.input`
+    font-size: 18px;
+    height:20px;
+    width: 429px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 1px;
+    :focus {
+        border: 2px solid #ffb6b6;
+        margin: 0px;
+    }
 `
 
 const Button = styled.button`
