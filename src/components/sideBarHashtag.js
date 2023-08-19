@@ -34,8 +34,9 @@ const ContainerSideBar = styled.div`
     width: 301px;
     display: flex;
     flex-direction: column;
-    margin-left: 16px;
-    margin-top: 100px;
+    position: absolute;
+    right: 22%;
+    margin-top: 220px;
     background-color: #171717;
     border-radius: 16px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;

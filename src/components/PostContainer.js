@@ -7,6 +7,7 @@ import LinkContainer from "./LinkContainer"
 export default function PostContainer(props){
     const {post} = props
     const [urlInfo, setUrlInfo] = useState('')
+    console.log(post, 'informaçoes do post')
     useEffect(() => {
         const url = `https://jsonlink.io/api/extract?url=${post.link}`
         axios.get(url)
