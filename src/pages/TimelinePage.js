@@ -26,7 +26,6 @@ export default function TimelinePage() {
         const url = `${process.env.REACT_APP_API_URL}posts/1`
         axios.get(url)
             .then(resp => {
-                console.log(resp.data)
                 setPosts(resp.data)
             })
             .catch(err => {
@@ -53,7 +52,7 @@ export default function TimelinePage() {
                     setPostPosted={setPostPosted}
                 />
                 {posts.map(post => (
-                <PostContainer post={post}/>)
+                <PostContainer key= {post.postId} post={post} posts={posts}/>)
                 )}
                 {/* <SideBarHashtags/> */}
             </TimelineContainer>

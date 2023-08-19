@@ -15,7 +15,7 @@ export default function Likes(props) {
     }
 
     useEffect(() => {
-        const promise = axios.get(`${REACT_APP_API_URL}/likes/${props.postid}`, props.userid)
+        const promise = axios.get(`${process.env.REACT_APP_API_URL}/likes/${props.postid}`, props.userid)
             .then((res) => {
                 setData(res.data);
                 if (res.data.likedu) {
