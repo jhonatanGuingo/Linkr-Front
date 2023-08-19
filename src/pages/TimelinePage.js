@@ -16,6 +16,7 @@ export default function TimelinePage() {
     const [postPosted, setPostPosted] = useState(false)
     const [link, setLink] = useState('')
     const [description, setDescription] = useState('')
+    
 
     useEffect(() => {
         if (!token) {
@@ -28,12 +29,18 @@ export default function TimelinePage() {
             .then(resp => {
                 console.log(resp.data)
                 setPosts(resp.data)
+                
             })
             .catch(err => {
                 console.log(err)
             })
+            
+            
     }, [postPosted])
+    
 
+      
+    
     return (
         <TimelinePageContainer>
             <Header/>
