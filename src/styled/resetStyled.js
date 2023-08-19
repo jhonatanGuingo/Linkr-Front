@@ -44,6 +44,12 @@ const ResetStyle = createGlobalStyle`
 		border-collapse: collapse;
 		border-spacing: 0;
 	}
+	*:focus {
+    outline: none;
+    }
+	*::placeholder{
+		color:lightgray;
+	}
 `
 
 export default ResetStyle
