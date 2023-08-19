@@ -1,12 +1,12 @@
 import {styled} from "styled-components"
-import Header from "./Header"
+
 import { Tagify } from 'react-tagify';
 
 export default function SideBarHashtags(){
 
     return(
         <>
-        <Header/>
+       
         <ContainerSideBar>
             <div>
                 <h1>trending</h1>
