@@ -9,9 +9,11 @@ export default function AuthProvider({ children }) {
     const saveImage = (data) => {
       localStorage.setItem("image", data.image)
     }
-  
+    const saveUserId = (data) => {
+      localStorage.setItem("userId", data.userId)
+    }
     return (
-      <AuthContext.Provider value={{ saveToken, saveImage }}>
+      <AuthContext.Provider value={{ saveToken, saveImage, saveUserId }}>
         {children}
       </AuthContext.Provider>
     );

@@ -4,12 +4,14 @@ import { styled } from "styled-components"
 
 export default function LinkContainer(props){
     const {urlInfo, setUrlInfo} = props
-
     return(
         <LinkContainerr onClick={() => window.open(urlInfo.url, '_blank')}>
             <LinkInfoContainer>
                 <Title>{urlInfo.title}</Title>
-                <Description>{urlInfo.description}</Description>
+                {urlInfo.description?.split(' ').length > 20 ? 
+                <Description>{`${urlInfo.description.split(' ').slice(0,20).join(' ')}...`}</Description> 
+                : 
+                <Description>{urlInfo.description}</Description>}
                 <Url>{urlInfo.url}</Url>
             </LinkInfoContainer>
             <UrlImg src={urlInfo.images[0]}/>
