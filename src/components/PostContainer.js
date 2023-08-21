@@ -7,6 +7,7 @@ import { MdEdit } from "react-icons/md"
 import { RiDeleteBin7Fill } from "react-icons/ri"
 import { DeleteContext } from "../context/DeleteContext"
 import { EditContext } from "../context/EditContext"
+import { Tagify } from "react-tagify"
 
 
 export default function PostContainer(props){
@@ -107,7 +108,11 @@ export default function PostContainer(props){
                     onKeyUp={handleTextareaKeyPress}
                 /> 
                 :
-                <Description>{post.description}</Description>}
+                <Description>
+                    <Tagify tagStyle={{fontWeight: 'bold'}}>
+                    {post.description}
+                    </Tagify>
+                    </Description>}
                 <LinkContainer 
                     onClick={() => window.open(urlInfo.url, '_blank')} 
                     urlInfo={urlInfo} 
