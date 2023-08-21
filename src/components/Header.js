@@ -1,6 +1,7 @@
 import { styled } from "styled-components"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "./searchBar";
 
 
 export default function Header() {
@@ -35,6 +36,7 @@ export default function Header() {
     return (
             <StyledLogoContainer>
                 <StyledLogo onClick={getHome}> linkr</StyledLogo>
+                <SearchBar />
                 <StyledArrow onClick={handleArrowClick} showLogout={showLogout}>
                     <StyledArrowIcon showLogout={showLogout}>&#9660;</StyledArrowIcon>
                     {showLogout && (
@@ -63,6 +65,8 @@ const StyledLogoContainer = styled.div`
 `
 
 const StyledLogo = styled.div`
+    display: flex;
+    align-items: center;
     height: 30px;
     margin-left:10px;
     font-size: 49px;
@@ -87,7 +91,7 @@ const StyledArrowIcon = styled.div`
 const StyledLogoutBox = styled.div`
     position: absolute;
     background-color: #151515; 
-    top: 30px;
+    top: 40px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     padding: 10px;
     border-radius: 5px;
@@ -101,3 +105,4 @@ const StyledLogoutOption = styled.div`
     color:#ffffff;
     cursor: pointer;
 `;
+
