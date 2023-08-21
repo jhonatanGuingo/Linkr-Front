@@ -23,8 +23,8 @@ export default function TimelinePage() {
     const [loading, setLoading] = useState(false)
     const [hashtagsEncontradas, setHashtagsEncontradas] = useState();
     const {deleted, setDeleted, deleteButtonClicked, setDeleteButtonClicked} = useContext(DeleteContext)
-    const {edited, setEdited} = useContext(EditContext)
-    const [newPost, setNewPost] = useState({});
+    const {edited, setEdited, newPost, setNewPost} = useContext(EditContext)
+    
 
 
     useEffect(() => {

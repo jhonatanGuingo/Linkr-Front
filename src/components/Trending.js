@@ -1,14 +1,20 @@
 import { styled } from "styled-components";
 import { Tagify } from 'react-tagify';
+import { useNavigate } from "react-router-dom";
 export default function Trending(props){
     const {nameHashtag} = props;
     const comHash = '#'+nameHashtag;
+    const navigate = useNavigate();
+    function handleHashtagPage(text){
+        console.log(text);
+        navigate(`/hashtag/${text}`);
+    }
     return (
         
            
         <ContainerTrend>
        
-       <Tagify tagStyle={{fontWeight: 'bold'}}>
+       <Tagify tagStyle={{fontWeight: 'bold'}} onClick={(text) => handleHashtagPage(text)}>
                 {comHash}
             </Tagify>
             

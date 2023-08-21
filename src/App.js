@@ -3,6 +3,7 @@ import SingUpPage from "./pages/signUpPage.js";
 import SignInPage from "./pages/signInPage.js";
 import TimelinePage from "./pages/TimelinePage.js";
 import UserPage from "./pages/userPage.js";
+import HashtagPage from "./pages/HashtagPage.js";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
                     <Route path="/signup" element={<SingUpPage />} />
                     <Route path="/" element={<SignInPage />} />
                     <Route path="/timeline" element={<TimelinePage />} />
+                    <Route path="/hashtag/:hashtag" element={<HashtagPage/>} />
                 </Routes>
             </BrowserRouter>
         </>

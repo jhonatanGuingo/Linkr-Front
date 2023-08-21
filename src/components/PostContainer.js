@@ -8,6 +8,7 @@ import { RiDeleteBin7Fill } from "react-icons/ri"
 import { DeleteContext } from "../context/DeleteContext"
 import { EditContext } from "../context/EditContext"
 import { Tagify } from "react-tagify"
+import { useNavigate } from "react-router-dom"
 
 
 export default function PostContainer(props){
@@ -20,7 +21,7 @@ export default function PostContainer(props){
     const [description, setDescription] = useState(post.description)
     const [disabled, setDisabled] = useState(false)
     const token = localStorage.getItem("token");
-
+    const navigate = useNavigate();
     const textAreaRef = useRef();
     
     useEffect(() => {
@@ -75,6 +76,11 @@ export default function PostContainer(props){
         }
     }
 
+    function handleHashtagPage(text){
+        console.log(text);
+        navigate(`/hashtag/${text}`);
+    }
+
     return(
         <>
         {urlInfo.length === 0 ? 
@@ -109,7 +115,7 @@ export default function PostContainer(props){
                 /> 
                 :
                 <Description>
-                    <Tagify tagStyle={{fontWeight: 'bold'}}>
+                    <Tagify tagStyle={{fontWeight: 'bold'}} onClick={(text) => handleHashtagPage(text)}>
                     {post.description}
                     </Tagify>
                     </Description>}
