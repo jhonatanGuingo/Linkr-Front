@@ -14,14 +14,17 @@ export default function TimelinePage() {
     const token = localStorage.getItem("token");
     const image = localStorage.getItem("image");
     const navigate = useNavigate();
+    const [postId, setPostId] = useState('');
     const [posts, setPosts] = useState([])
     const [postPosted, setPostPosted] = useState(false)
     const [link, setLink] = useState('')
     const [description, setDescription] = useState('')
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false)
+    const [hashtagsEncontradas, setHashtagsEncontradas] = useState();
     const {deleted, setDeleted, deleteButtonClicked, setDeleteButtonClicked} = useContext(DeleteContext)
-    const {edited, setEdited} = useContext(EditContext)
+    const {edited, setEdited, newPost, setNewPost} = useContext(EditContext)
+    
 
 
     useEffect(() => {
@@ -30,8 +33,6 @@ export default function TimelinePage() {
             navigate("/");
             return;
         }
-        console.log(page)
-        console.log(loading)
         const url = `${process.env.REACT_APP_API_URL}posts/${page}`
         axios.get(url)
             .then(resp => {
@@ -39,6 +40,7 @@ export default function TimelinePage() {
                 if(posts !== resp.data){
                     setPosts(resp.data)
                 }
+                verificarHashtagsNaPostagem()
             })
             .catch(err => {
                 console.log(err)
@@ -48,6 +50,51 @@ export default function TimelinePage() {
         return () => {window.removeEventListener('scroll', handleScroll)}
     }, [postPosted, deleted, edited])
 
+    function verificarHashtags(texto) {
+
+       
+        const regex = /#\w+/g;
+        const hashtags = texto.match(regex);
+        if (hashtags) {
+           
+          return hashtags.map(hashtag => ({nameHashtag: hashtag.slice(1),
+        postId: postId.id}));
+           // Remover o caractere '#'
+        }
+        return [];
+      }
+
+    function verificarHashtagsNaPostagem() {
+       
+        console.log(postId);
+       
+        if(newPost.description != null ){
+           
+            const texto = newPost.description;
+            //const postId = newPost.id;
+            const hashtags = verificarHashtags(texto);
+            setHashtagsEncontradas(hashtags);
+            console.log(hashtags, "oidnv")
+            handleAddHashtags(hashtags);
+        }
+    
+            
+            
+        }
+    
+
+        function handleAddHashtags(hashtags){
+            const url = `${process.env.REACT_APP_API_URL}hashtag`
+            console.log(hashtags,"handdle")
+            axios.post(url, hashtags)
+            .then(resp => {
+                console.log(resp.data)
+                setPostId('');
+            })
+            .catch(err => {
+                console.log(err)
+            })
+          }
 
     function handleScroll(){
         if(window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight){
@@ -92,13 +139,15 @@ export default function TimelinePage() {
                     setDescription={setDescription}
                     postPosted={postPosted} 
                     setPostPosted={setPostPosted}
+                    setNewPost = {setNewPost}
+                    setPostId = {setPostId}
                 />
                 
                 {posts.map(post => (
                 <PostContainer key= {post.postId} post={post} posts={posts}/>)
                 )}
-               {/*  <SideBarHashtags postPosted = {postPosted} deleted =  {deleted} edited = {edited} />  */}
-               
+                 <SideBarHashtags newPost = {newPost} postPosted = {postPosted} deleted =  {deleted} edited = {edited} /> 
+
                 {loading ? <h1>Loading</h1> : ''}
                 
                 
