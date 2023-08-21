@@ -27,11 +27,12 @@ export default function Header() {
 
     function handleLogout() {
         localStorage.removeItem("token");
+        localStorage.removeItem("image")
+        localStorage.removeItem("userId")
         navigate('/');
     }
 
     return (
-        <>
             <StyledLogoContainer>
                 <StyledLogo onClick={getHome}> linkr</StyledLogo>
                 <StyledArrow onClick={handleArrowClick} showLogout={showLogout}>
@@ -43,8 +44,7 @@ export default function Header() {
                     )}
                 </StyledArrow>
             </StyledLogoContainer>
-        </>
-    );
+    )
 }
 
 
@@ -58,9 +58,9 @@ const StyledLogoContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    z-index: 1000;
+    z-index: 4;
     top: 0;
-    `;
+`
 
 const StyledLogo = styled.div`
     height: 30px;
@@ -71,7 +71,7 @@ const StyledLogo = styled.div`
 `;
 
 const StyledArrow = styled.div`
-margin-right:40px;
+    margin-right:40px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -94,9 +94,9 @@ const StyledLogoutBox = styled.div`
 `;
 
 const StyledLogoutOption = styled.div`
-font-family: 'Passion One', cursive;
-font-size:20px;
-font-weight: 400;
+    font-family: 'Passion One', cursive;
+    font-size:20px;
+    font-weight: 400;
     background-color: #151515; 
     color:#ffffff;
     cursor: pointer;
