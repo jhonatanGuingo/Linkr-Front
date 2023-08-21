@@ -8,6 +8,7 @@ export default function Header() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
+    const image = localStorage.getItem("image");
 
     useEffect(() => {
         if (!token) {
@@ -37,6 +38,7 @@ export default function Header() {
             <StyledLogoContainer>
                 <StyledLogo onClick={getHome}> linkr</StyledLogo>
                 <SearchBar />
+                <Container>
                 <StyledArrow onClick={handleArrowClick} showLogout={showLogout}>
                     <StyledArrowIcon showLogout={showLogout}>&#9660;</StyledArrowIcon>
                     {showLogout && (
@@ -45,10 +47,24 @@ export default function Header() {
                         </StyledLogoutBox>
                     )}
                 </StyledArrow>
+                <ProfileImg src={image}/>
+                </Container>
             </StyledLogoContainer>
     )
 }
 
+const Container = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+const ProfileImg = styled.img`
+    width: 45px;
+    height: 45px;
+    border-radius: 30px;
+    margin-right: 20px;
+`
 
 const StyledLogoContainer = styled.div`
     width: 100%;
@@ -75,7 +91,7 @@ const StyledLogo = styled.div`
 `;
 
 const StyledArrow = styled.div`
-    margin-right:40px;
+    margin-right:9px;
     height: 30px;
     display: flex;
     align-items: center;
