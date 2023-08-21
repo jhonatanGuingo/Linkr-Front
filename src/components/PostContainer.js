@@ -21,6 +21,7 @@ export default function PostContainer(props){
     const token = localStorage.getItem("token");
 
     const textAreaRef = useRef();
+    console.log(post, 'informaçoes do post')
     useEffect(() => {
         const url = `https://jsonlink.io/api/extract?url=${post.link}`
         axios.get(url)

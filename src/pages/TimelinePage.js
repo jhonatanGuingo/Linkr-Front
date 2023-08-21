@@ -78,8 +78,11 @@ export default function TimelinePage() {
                 <Mensagem>There are no posts yet</Mensagem>
             </TimelineContainer>
             :
+            
             <TimelineContainer>  
+
                 <h1>timeline</h1>
+                 
                 <PublishContainer 
                     link={link} 
                     setLink={setLink} 
@@ -88,12 +91,16 @@ export default function TimelinePage() {
                     postPosted={postPosted} 
                     setPostPosted={setPostPosted}
                 />
+                
                 {posts.map(post => (
                 <PostContainer key= {post.postId} post={post} posts={posts}/>)
                 )}
                 {/* <SideBarHashtags/> */}
                 {loading ? <h1>Loading</h1> : ''}
+                
+                
             </TimelineContainer>
+            
             }
         </TimelinePageContainer>
         {deleteButtonClicked ? <Overlay/> : ''}  
@@ -119,6 +126,7 @@ const TimelineContainer = styled.div`
     align-items: flex-start;
     width: 920px;
     margin-top: 72px;
+    
     h1{
         font-family: 'Oswald';
         //background-color: blue;
