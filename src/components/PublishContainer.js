@@ -3,8 +3,9 @@ import { useState } from "react";
 import { styled } from "styled-components";
 
 export default function PublishContainer(props){
-    const {link, setLink, description, setDescription, postPosted, setPostPosted} = props
+    const {link, setLink, description, setNewPost, setPostId, setDescription, postPosted, setPostPosted} = props
     const [disabled, setDisabled] = useState(false)
+
     const image = localStorage.getItem("image");
     const token = localStorage.getItem("token")
 
@@ -16,13 +17,16 @@ export default function PublishContainer(props){
         let body;
         if(description){
             body = {link, description}
+            setNewPost({description: description})
         }else{
             body = {link}
+            setNewPost(body)
         }
         axios.post(url, body, config)
             .then(resp => {
-                console.log(resp.data)
+                console.log(resp.data, 'resp')
                 const aux = !postPosted
+                setPostId(resp.data);
                 setPostPosted(aux)
                 setLink('')
                 setDescription('')
