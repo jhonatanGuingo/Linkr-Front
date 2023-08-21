@@ -1,12 +1,56 @@
 import {styled} from "styled-components"
-import Header from "./Header"
+import { useEffect, useState } from "react";
 import { Tagify } from 'react-tagify';
+import axios from "axios";
 
 export default function SideBarHashtags(){
+  const [posts, setPosts] = useState([])
+  const [hashtagsEncontradas, setHashtagsEncontradas] = useState([]);
+  useEffect(() => {
+    const url = `${process.env.REACT_APP_API_URL}posts`
+    axios.get(url)
+            .then(resp => {
+                console.log(resp.data)
+                setPosts(resp.data)
+                verificarHashtagsNaPostagem()
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    
+  }, [posts])
+  function verificarHashtags(texto, postId) {
 
+    
+    const regex = /#\w+/g;
+    const hashtags = texto.match(regex);
+    if (hashtags) {
+      return hashtags.map(hashtag => ({postId: postId, nameHashtag: hashtag.slice(1)})); // Remover o caractere '#'
+    }
+    return [];
+  }
+
+  function verificarHashtagsNaPostagem() {
+    const hashtagsTotais = [];
+    for(let i =0; i < posts.length ; i++){
+        
+        if(posts[i].description != 0){
+            const texto = posts[i].description;
+            const postId = posts[i].postId;
+            const hashtags = verificarHashtags(texto, postId);
+            console.log(hashtags,'vendo hashtags')
+            hashtagsTotais.push(...hashtags);
+        }else{
+
+        }
+        setHashtagsEncontradas(hashtagsTotais);
+        console.log(hashtagsTotais, "hashtagtotais")
+    }
+    
+  }
     return(
         <>
-        <Header/>
+       
         <ContainerSideBar>
             <div>
                 <h1>trending</h1>

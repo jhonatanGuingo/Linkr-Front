@@ -14,16 +14,15 @@ export default function TimelinePage() {
     const token = localStorage.getItem("token");
     const image = localStorage.getItem("image");
     const navigate = useNavigate();
-
     const [posts, setPosts] = useState([])
     const [postPosted, setPostPosted] = useState(false)
     const [link, setLink] = useState('')
     const [description, setDescription] = useState('')
     const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(false)
-
     const {deleted, setDeleted, deleteButtonClicked, setDeleteButtonClicked} = useContext(DeleteContext)
     const {edited, setEdited} = useContext(EditContext)
+
 
     useEffect(() => {
         if (!token) {
@@ -44,6 +43,7 @@ export default function TimelinePage() {
             .catch(err => {
                 console.log(err)
             })
+      
         window.addEventListener('scroll', handleScroll)
         return () => {window.removeEventListener('scroll', handleScroll)}
     }, [postPosted, deleted, edited])
@@ -69,6 +69,8 @@ export default function TimelinePage() {
         }
     }
 
+      
+    
     return (
         <>
         <TimelinePageContainer>

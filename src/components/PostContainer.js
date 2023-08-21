@@ -27,11 +27,13 @@ export default function PostContainer(props){
         axios.get(url)
             .then(resp => {
                 setUrlInfo(resp.data)
+                
             })
             .catch(err => {
                 console.log(err)
             })
     }, [posts])
+  
     function confirmDeletion(event){
         event.preventDefault();
         const aux = !deleteButtonClicked
@@ -71,6 +73,7 @@ export default function PostContainer(props){
                 })
         }
     }
+
     return(
         <>
         {urlInfo.length === 0 ? 
