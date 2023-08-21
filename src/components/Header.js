@@ -1,6 +1,7 @@
 import { styled } from "styled-components"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "./searchBar";
 
 
 export default function Header() {
@@ -27,13 +28,15 @@ export default function Header() {
 
     function handleLogout() {
         localStorage.removeItem("token");
+        localStorage.removeItem("image")
+        localStorage.removeItem("userId")
         navigate('/');
     }
 
     return (
-        <>
             <StyledLogoContainer>
                 <StyledLogo onClick={getHome}> linkr</StyledLogo>
+                <SearchBar />
                 <StyledArrow onClick={handleArrowClick} showLogout={showLogout}>
                     <StyledArrowIcon showLogout={showLogout}>&#9660;</StyledArrowIcon>
                     {showLogout && (
@@ -43,8 +46,7 @@ export default function Header() {
                     )}
                 </StyledArrow>
             </StyledLogoContainer>
-        </>
-    );
+    )
 }
 
 
@@ -58,11 +60,13 @@ const StyledLogoContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    z-index: 1000;
+    z-index: 4;
     top: 0;
-    `;
+`
 
 const StyledLogo = styled.div`
+    display: flex;
+    align-items: center;
     height: 30px;
     margin-left:10px;
     font-size: 49px;
@@ -71,7 +75,7 @@ const StyledLogo = styled.div`
 `;
 
 const StyledArrow = styled.div`
-margin-right:40px;
+    margin-right:40px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -87,17 +91,18 @@ const StyledArrowIcon = styled.div`
 const StyledLogoutBox = styled.div`
     position: absolute;
     background-color: #151515; 
-    top: 30px;
+    top: 40px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     padding: 10px;
     border-radius: 5px;
 `;
 
 const StyledLogoutOption = styled.div`
-font-family: 'Passion One', cursive;
-font-size:20px;
-font-weight: 400;
+    font-family: 'Passion One', cursive;
+    font-size:20px;
+    font-weight: 400;
     background-color: #151515; 
     color:#ffffff;
     cursor: pointer;
 `;
+

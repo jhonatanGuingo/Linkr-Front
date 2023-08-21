@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext.js";
 
 
 export default function SignInPage() {
-    const { saveToken, saveImage } = useContext(AuthContext);
+    const { saveToken, saveImage, saveUserId } = useContext(AuthContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,6 +23,7 @@ export default function SignInPage() {
                 const promisse = await api.post('/signin', { email, password })
                 saveToken(promisse.data)
                 saveImage(promisse.data)
+                saveUserId(promisse.data)
                 setIsLoading(false);
                 navigate("/timeline")
             } catch (error) {

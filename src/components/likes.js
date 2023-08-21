@@ -5,7 +5,6 @@ import { styled } from 'styled-components';
 
 export default function Likes(props) {
     /// Preciso receber por props o userid e o Postid
-
     const [liked, setLiked] = useState(false);
     const [ballon, setBallon] = useState(false);
     const [data, setData] = useState([])
@@ -15,8 +14,9 @@ export default function Likes(props) {
     }
 
     useEffect(() => {
-        const promise = axios.get(`${REACT_APP_API_URL}/likes/${props.postid}`, props.userid)
+        const promise = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}`, props.userid)
             .then((res) => {
+                console.log(res)
                 setData(res.data);
                 if (res.data.likedu) {
                     setLiked(true);
