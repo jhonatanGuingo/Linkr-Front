@@ -3,22 +3,24 @@ import { useEffect, useState } from "react";
 import { Tagify } from 'react-tagify';
 import axios from "axios";
 
-export default function SideBarHashtags(){
+export default function SideBarHashtags(props){
   const [posts, setPosts] = useState([])
+    const {postPosted, deleted, edited} = props;
   const [hashtagsEncontradas, setHashtagsEncontradas] = useState([]);
   useEffect(() => {
     const url = `${process.env.REACT_APP_API_URL}posts`
     axios.get(url)
             .then(resp => {
                 console.log(resp.data)
-                setPosts(resp.data)
                 verificarHashtagsNaPostagem()
+                setPosts(resp.data)
+                
             })
             .catch(err => {
                 console.log(err)
             })
     
-  }, [posts])
+  }, [postPosted, deleted, edited])
   function verificarHashtags(texto, postId) {
 
     
@@ -29,22 +31,31 @@ export default function SideBarHashtags(){
     }
     return [];
   }
-
+  function handleAddHashtags(){
+    const url = `${process.env.REACT_APP_API_URL}hashtag`
+ 
+    axios.put(url, hashtagsEncontradas)
+    .then(resp => {
+        console.log(resp.data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+  }
   function verificarHashtagsNaPostagem() {
     const hashtagsTotais = [];
     for(let i =0; i < posts.length ; i++){
-        
-        if(posts[i].description != 0){
+      
+        if(posts[i].description != null ){
             const texto = posts[i].description;
-            const postId = posts[i].postId;
+            const postId = posts[i].id;
             const hashtags = verificarHashtags(texto, postId);
-            console.log(hashtags,'vendo hashtags')
             hashtagsTotais.push(...hashtags);
-        }else{
-
         }
+
         setHashtagsEncontradas(hashtagsTotais);
-        console.log(hashtagsTotais, "hashtagtotais")
+        handleAddHashtags();
+        
     }
     
   }

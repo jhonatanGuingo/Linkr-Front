@@ -97,11 +97,12 @@ export default function TimelinePage() {
                 {posts.map(post => (
                 <PostContainer key= {post.postId} post={post} posts={posts}/>)
                 )}
-                {/* <SideBarHashtags/> */}
+               {/*  <SideBarHashtags postPosted = {postPosted} deleted =  {deleted} edited = {edited} />  */}
+               
                 {loading ? <h1>Loading</h1> : ''}
                 
                 
-            </TimelineContainer>
+            </TimelineContainer >
             
             }
         </TimelinePageContainer>
