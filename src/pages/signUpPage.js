@@ -52,27 +52,31 @@ export default function SingUpPage() {
                         placeholder="email"
                         type="email"
                         required value={email}
-                        onChange={(e) => setEmail(e.target.value)} />
+                        onChange={(e) => setEmail(e.target.value)} 
+                        data-test = "email"/>
                     <SignUpInput
                         placeholder="password"
                         type="password"
                         required value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        data-test = "password"
                     />
                     <SignUpInput
                         placeholder="username"
                         type="name"
                         required value={userName}
-                        onChange={(e) => setUserName(e.target.value)} />
+                        onChange={(e) => setUserName(e.target.value)} 
+                        data-test = "username"/>
                     <SignUpInput 
                         placeholder="picture url"
                         type="url"
                         required value={image}
-                        onChange={(e) => setImage(e.target.value)} />
+                        onChange={(e) => setImage(e.target.value)} 
+                        data-test = "pciture-url"/>
                     <Button onClick={checkData} data-test="sign-up-btn" type="submit" disabled={isLoading}>
                         Sign Up
                     </Button>
-                    <Message onClick={getSignIn}>Switch back to log in</Message>
+                    <Message onClick={getSignIn} data-test = "login-link">Switch back to log in</Message>
                 </SignUpForm>
             </SingUpContainer>
         </>

@@ -22,7 +22,7 @@ export default function SideBarHashtags(props){
     return(
         <>
        
-        <ContainerSideBar>
+        <ContainerSideBar data-test = "trending">
             <div>
                 <h1>trending</h1>
             </div>

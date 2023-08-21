@@ -5,14 +5,16 @@ export default function Trending(props){
     const {nameHashtag} = props;
     const comHash = '#'+nameHashtag;
     const navigate = useNavigate();
+
     function handleHashtagPage(text){
         console.log(text);
         navigate(`/hashtag/${text}`);
     }
+
     return (
         
            
-        <ContainerTrend>
+        <ContainerTrend data-test = "hashtag">
        
        <Tagify tagStyle={{fontWeight: 'bold'}} onClick={(text) => handleHashtagPage(text)}>
                 {comHash}
