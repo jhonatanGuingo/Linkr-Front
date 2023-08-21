@@ -47,7 +47,7 @@ export default function Header() {
                         </StyledLogoutBox>
                     )}
                 </StyledArrow>
-                <ProfileImg src={image}/>
+                <ProfileImg src={image} data-test= "avatar"/>
                 </Container>
             </StyledLogoContainer>
     )

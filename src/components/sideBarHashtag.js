@@ -1,6 +1,5 @@
 import {styled} from "styled-components"
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 import Trending from "./Trending";
 
