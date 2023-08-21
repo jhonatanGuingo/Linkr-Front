@@ -40,7 +40,7 @@ export default function PublishContainer(props){
     }
 
     return(
-        <PublishContainerr>
+        <PublishContainerr data-test = "publish-box">
             <img src={image}/>
             <ContentContainer>
             <p>What are you going to share today?</p>
@@ -51,15 +51,17 @@ export default function PublishContainer(props){
                 type='text'
                 placeholder="http://"
                 value={link}
-                onChange={e => setLink(e.target.value)}/>
+                onChange={e => setLink(e.target.value)}
+                data-test = "link"/>
                 <TextInput disabled={disabled}
                 height='75px'
                 type='text'
                 placeholder="Description"
                 value={description}
-                onChange={e => setDescription(e.target.value)}/>
+                onChange={e => setDescription(e.target.value)}
+                data-test = "description"/>
                 <ButtonContainer>
-                    <PostButton type='submit' disabled={disabled}>
+                    <PostButton type='submit' disabled={disabled} data-test = "publish-btn">
                             {disabled ? 
                             'Publishing...'
                             : 

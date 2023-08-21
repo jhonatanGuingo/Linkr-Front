@@ -54,8 +54,8 @@ export default function Overlay(){
             <PopUpContainer>
                 <Mensagem>Are you sure you want to delete this post?</Mensagem>
                 <ButtonsContainer>
-                    <ButtonNo onClick={goBack}>No, go back</ButtonNo>
-                    <ButtonYes onClick={deletePost}>Yes, delete it</ButtonYes>
+                    <ButtonNo onClick={goBack} data-test = "cancel">No, go back</ButtonNo>
+                    <ButtonYes onClick={deletePost} data-test = "confirm">Yes, delete it</ButtonYes>
                 </ButtonsContainer>
             </PopUpContainer>}
         </Overlayy>

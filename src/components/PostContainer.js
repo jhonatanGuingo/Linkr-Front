@@ -86,18 +86,18 @@ export default function PostContainer(props){
         {urlInfo.length === 0 ? 
         ''
         :
-        <PostContainerr>
+        <PostContainerr data-test = "post">
             <UserImgContainer>
                 <ProfileImg src={post.image}/>
                 {/* <Likes postid={post.postId} userid={post.userId}/> */}
             </UserImgContainer>
             <PostInfoContainer>
                 <Container>
-                    <User>{post.userName}</User>
+                    <User data-test = "username">{post.userName}</User>
                     {Number(userId) === post.userId ? 
                     <div>
-                        <MdEdit style={editStyle} onClick={editt}/>
-                        <RiDeleteBin7Fill style={deleteStyle} onClick={confirmDeletion}/>
+                        <MdEdit style={editStyle} onClick={editt} data-test = "edit-btn"/>
+                        <RiDeleteBin7Fill style={deleteStyle} onClick={confirmDeletion} data-test = "delete-btn"/>
                     </div>
                     :
                     ''}
@@ -112,9 +112,11 @@ export default function PostContainer(props){
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                     onKeyUp={handleTextareaKeyPress}
+                    data-test = "edit-input"
+                    
                 /> 
                 :
-                <Description>
+                <Description data-test = "description">
                     <Tagify tagStyle={{fontWeight: 'bold'}} onClick={(text) => handleHashtagPage(text)}>
                     {post.description}
                     </Tagify>
@@ -123,6 +125,7 @@ export default function PostContainer(props){
                     onClick={() => window.open(urlInfo.url, '_blank')} 
                     urlInfo={urlInfo} 
                     setUrlInfo={setUrlInfo}
+                    data-test = "link"
                 />
             </PostInfoContainer>
         </PostContainerr>
