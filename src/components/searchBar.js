@@ -1,24 +1,43 @@
 import { styled } from "styled-components"
 import { AiOutlineSearch } from "react-icons/ai"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { DebounceInput } from "react-debounce-input";
+import UsersFound from "./UsersFound";
+import axios from "axios";
 
 export default function SearchBar() {
 
     const [complete, setComplete] = useState(false);
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState('');
+    const [usersFound, setUsersFound] = useState([])
+    useEffect(() => {
+        
+        const url = `${process.env.REACT_APP_API_URL}users/${search}`
+        axios.get(url)
+                .then(resp => {
+                    console.log(resp.data)
+                    setUsersFound(resp.data);
+                })
+                .catch(err => {
+                    console.log(err)
+                })
 
+    }, [search])
 
 
 
     return (
         <SearchBox>
-            <Search
-                placeholder="Search for people"
-                onFocus={() => { setComplete(true) }}
-                onBlur={() => { setComplete(false) }}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
+            <Search>
+            <DebounceInput 
+            placeholder="Search for people"
+            onFocus={() => { setComplete(true) }}
+            onBlur={() => { setComplete(false) }}
+            minLength={3}
+            debounceTimeout = { 300 } 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}/>
+            </Search>
             <SearchButton>
                 <AiOutlineSearch />
             </SearchButton>
@@ -27,7 +46,7 @@ export default function SearchBar() {
                 (<AutoCompleteBox>
                     <AutoComplete>
                         <UserIcon />
-                        Teste
+                        {usersFound.map(userFound => (<UsersFound image = {userFound.image} userName = {userFound.userName} />))}
                     </AutoComplete>
                 </AutoCompleteBox>)
             }
@@ -57,8 +76,8 @@ const SearchBox = styled.div`
 `
 
 
-const Search = styled.input`
-    height: 95%;
+const Search = styled.div`
+    input {height: 95%;
     width: 86%;
     padding-left:20px;
     border-radius:8px;
@@ -72,7 +91,7 @@ const Search = styled.input`
     z-index: 100;
     input::placeholder{
         color:blueviolet;
-    }
+    }}
 `
 
 const SearchButton = styled.button`
