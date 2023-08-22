@@ -89,7 +89,7 @@ export default function PostContainer(props){
         <PostContainerr data-test = "post">
             <UserImgContainer>
                 <ProfileImg src={post.image}/>
-                {/* <Likes postid={post.postId} userid={post.userId}/> */}
+                <Likes postid={post.postId} userid={post.userId}/>
             </UserImgContainer>
             <PostInfoContainer>
                 <Container>
@@ -166,8 +166,9 @@ const PostContainerr = styled.div`
 const UserImgContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    height: 150px;
 `
 
 const ProfileImg = styled.img`
