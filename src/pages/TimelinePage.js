@@ -101,7 +101,7 @@ export default function TimelinePage() {
             setLoading(true)
             console.log('oi')
             const auxx = page + 1
-            const url = `${process.env.REACT_APP_API_URL}posts/${auxx}`
+            const url = `${process.env.REACT_APP_API_URL}/posts/${auxx}`
             axios.get(url)
             .then(resp => {
                 if(posts.length < resp.data.length){

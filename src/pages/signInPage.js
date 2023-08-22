@@ -13,6 +13,8 @@ export default function SignInPage() {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(process.env.REACT_APP_API_URL)
+
     //Checar se os dados foram preenchidos corretamente
     function checkData(event) {
         event.preventDefault()
