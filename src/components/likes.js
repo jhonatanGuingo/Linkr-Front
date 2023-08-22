@@ -10,17 +10,35 @@ export default function Likes(props) {
     const [data, setData] = useState([])
 
     function handleClick(bool) {
-        setLiked(bool);
+        const config ={
+            userid: props.userid,
+            postid: props.postid,
+            bool: bool
+        }
+        const promise = axios.post(`${process.env.REACT_APP_API_URL}likes/`,config)
+        .then((resa)=>{
+            console.log(resa)
+            const likestatus = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}/${props.userid}`)
+            .then((res) => {
+                console.log(res.data)
+                setData(res.data.likesNumber);
+                setLiked(res.data.likeUsers);
+            })
+            .catch((res) => {
+                console.log(res)
+            })
+        })
+        .catch((res)=>{
+            alert(res)
+        })
     }
 
     useEffect(() => {
-        const promise = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}`, props.userid)
+        const promise = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}/${props.userid}`)
             .then((res) => {
-                console.log(res)
-                setData(res.data);
-                if (res.data.likedu) {
-                    setLiked(true);
-                }
+                console.log(res.data)
+                setData(res.data.likesNumber);
+                setLiked(res.data.likeUsers);
             })
             .catch((res) => {
                 console.log(res)
@@ -28,24 +46,26 @@ export default function Likes(props) {
     }, [])
 
     return (
-        <Container>
-            <HeartIconWrapper onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)} >
+        <Container onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)}>
+            <HeartIconWrapper >
                 {liked ? (
                     <AiFillHeart style={{ color: 'red' }} onClick={() => handleClick(false)} />
                 ) : (
-                    <AiOutlineHeart onClick={() => handleClick(true)} />
+                    <AiOutlineHeart style={{ color: 'white' }} onClick={() => handleClick(true)} />
                 )}
                 {ballon && (
                     <Ballon>
                         {
                             data && (
-                                <p>
-                                    {data.likes.likedu
+                                <p> Curtido por: 
+                                    {liked
                                         ? 'Eu'
-                                        : data.likes.count > 2
-                                            ? `${data.likes.lastLikes[0]}, ${data.likes.lastLikes[1]} e outras ${data.likes.count - 2
+                                        : data.count > 2
+                                            ? ` ${data.lastLikes[0]}, ${data.lastLikes[1]} e outras ${data.count - 2
                                             } pessoas`
-                                            : `${data.likes.lastLikes[0]} e ${data.likes.lastLikes[1]}`}
+                                            : data.count == 0
+                                                ? ` 0 pessoas`
+                                                : ` ${data.lastLikes[0].name} ${data.lastLikes[1] ? `e ${data.lastLikes[1].name}` : ''}`}
                                 </p>
                             )
                         }
@@ -72,6 +92,7 @@ const Container = styled.div`
         line-height: 13px;
         letter-spacing: 0em;
         text-align: center;
+        color: white;
     }
 `;
 
@@ -105,6 +126,7 @@ const Ballon = styled.div`
         line-height: 13px;
         letter-spacing: 0em;
         text-align: left;
+        color: black;
 
     }
 `;
