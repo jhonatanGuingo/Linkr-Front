@@ -1,6 +1,5 @@
 import {styled} from "styled-components"
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 import Trending from "./Trending";
 
@@ -23,7 +22,7 @@ export default function SideBarHashtags(props){
     return(
         <>
        
-        <ContainerSideBar>
+        <ContainerSideBar data-test = "trending">
             <div>
                 <h1>trending</h1>
             </div>

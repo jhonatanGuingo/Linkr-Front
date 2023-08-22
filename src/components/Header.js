@@ -42,12 +42,12 @@ export default function Header() {
                 <StyledArrow onClick={handleArrowClick} showLogout={showLogout}>
                     <StyledArrowIcon showLogout={showLogout}>&#9660;</StyledArrowIcon>
                     {showLogout && (
-                        <StyledLogoutBox>
-                            <StyledLogoutOption onClick={handleLogout}>logout</StyledLogoutOption>
+                        <StyledLogoutBox data-test = "menu">
+                            <StyledLogoutOption onClick={handleLogout} data-test = "logout">logout</StyledLogoutOption>
                         </StyledLogoutBox>
                     )}
                 </StyledArrow>
-                <ProfileImg src={image}/>
+                <ProfileImg src={image} data-test= "avatar"/>
                 </Container>
             </StyledLogoContainer>
     )

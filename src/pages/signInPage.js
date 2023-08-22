@@ -56,17 +56,19 @@ export default function SignInPage() {
                     type="email"
                     required value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    data-test = "email"
                 />
                 <SignInInput
                     placeholder="password"
                     type="password"
                     required value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    data-test = "password"
                 />
-                <Button onClick={checkData} type="submit" disabled={isLoading}>
+                <Button onClick={checkData} type="submit" disabled={isLoading} data-test = "login=btn">
                     Sign In
                 </Button>
-                <Message onClick={getSignUp}>First time? Create an account!</Message>
+                <Message onClick={getSignUp} data-test = "sign-up-link">First time? Create an account!</Message>
             </SignInForm>
         </SingInContainer>
     )

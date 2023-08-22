@@ -124,7 +124,19 @@ export default function TimelinePage() {
             <Header/>
             { posts.length === 0 ? 
             <TimelineContainer>
-                <Mensagem>There are no posts yet</Mensagem>
+                <h1>timeline</h1>
+                 
+                 <PublishContainer 
+                     link={link} 
+                     setLink={setLink} 
+                     description={description} 
+                     setDescription={setDescription}
+                     postPosted={postPosted} 
+                     setPostPosted={setPostPosted}
+                     setNewPost = {setNewPost}
+                     setPostId = {setPostId}
+                 />
+                <Mensagem data-test = "message">There are no posts yet</Mensagem>
             </TimelineContainer>
             :
             
