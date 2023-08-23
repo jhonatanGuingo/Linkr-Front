@@ -89,7 +89,7 @@ export default function PostContainer(props){
         <PostContainerr data-test = "post">
             <UserImgContainer>
                 <ProfileImg src={post.image}/>
-                {/* <Likes postid={post.postId} userid={post.userId}/> */}
+                <Likes postid={post.postId} userid={post.userId}/>
             </UserImgContainer>
             <PostInfoContainer>
                 <Container>
