@@ -9,48 +9,49 @@ import { DeleteContext } from "../context/DeleteContext"
 import { EditContext } from "../context/EditContext"
 import { Tagify } from "react-tagify"
 import { useNavigate } from "react-router-dom"
+import CommentContainer from "./comments"
 
 
-export default function PostContainer(props){
-    const {posts, post} = props
+export default function PostContainer(props) {
+    const { posts, post } = props
     const [urlInfo, setUrlInfo] = useState('')
     const userId = localStorage.getItem("userId");
-    const {deleteButtonClicked, setDeleteButtonClicked, postToDelete, setPostToDelete} = useContext(DeleteContext)
-    const {edited, setEdited} = useContext(EditContext)
+    const { deleteButtonClicked, setDeleteButtonClicked, postToDelete, setPostToDelete } = useContext(DeleteContext)
+    const { edited, setEdited } = useContext(EditContext)
     const [edit, setEdit] = useState(false)
     const [description, setDescription] = useState(post.description)
     const [disabled, setDisabled] = useState(false)
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const textAreaRef = useRef();
-    
+
     useEffect(() => {
         const url = `https://jsonlink.io/api/extract?url=${post.link}`
         axios.get(url)
             .then(resp => {
                 setUrlInfo(resp.data)
-                
+
             })
             .catch(err => {
                 console.log(err)
             })
     }, [posts])
-  
-    function confirmDeletion(event){
+
+    function confirmDeletion(event) {
         event.preventDefault();
         const aux = !deleteButtonClicked
         setDeleteButtonClicked(aux)
         setPostToDelete(post.postId)
     }
-    function editt(event){
+    function editt(event) {
         event.preventDefault();
         const aux = !edit
         setEdit(aux)
-        if(!edit){
+        if (!edit) {
             setTimeout(() => textAreaRef.current.focus(), 80)
         }
     }
-    function handleTextareaKeyPress(event){
+    function handleTextareaKeyPress(event) {
         if (event.key === 'Escape') {
             const aux = !edit
             setEdit(aux)
@@ -58,8 +59,8 @@ export default function PostContainer(props){
         if (event.key === 'Enter') {
             setDisabled(true)
             const url = `${process.env.REACT_APP_API_URL}edit/${post.postId}`
-            const body = {description: description}
-            const config = {headers: {'Authorization': `Bearer ${token}`}}
+            const body = { description: description }
+            const config = { headers: { 'Authorization': `Bearer ${token}` } }
             axios.put(url, body, config)
                 .then(resp => {
                     const aux = !edited
@@ -76,61 +77,63 @@ export default function PostContainer(props){
         }
     }
 
-    function handleHashtagPage(text){
+    function handleHashtagPage(text) {
         console.log(text);
         navigate(`/hashtag/${text}`);
     }
 
-    return(
+    return (
         <>
-        {urlInfo.length === 0 ? 
-        ''
-        :
-        <PostContainerr data-test = "post">
-            <UserImgContainer>
-                <ProfileImg src={post.image}/>
-                <Likes postid={post.postId} userid={post.userId}/>
-            </UserImgContainer>
-            <PostInfoContainer>
-                <Container>
-                    <User data-test = "username">{post.userName}</User>
-                    {Number(userId) === post.userId ? 
-                    <div>
-                        <MdEdit style={editStyle} onClick={editt} data-test = "edit-btn"/>
-                        <RiDeleteBin7Fill style={deleteStyle} onClick={confirmDeletion} data-test = "delete-btn"/>
-                    </div>
-                    :
-                    ''}
-                </Container>
-                {edit ? 
-                <TextInput 
-                    disabled={disabled}
-                    ref={textAreaRef}
-                    height='60px'
-                    type='text'
-                    placeholder="Description"
-                    value={description}
-                    onChange={e => setDescription(e.target.value)}
-                    onKeyUp={handleTextareaKeyPress}
-                    data-test = "edit-input"
-                    
-                /> 
+            {urlInfo.length === 0 ?
+                ''
                 :
-                <Description data-test = "description">
-                    <Tagify tagStyle={{fontWeight: 'bold'}} onClick={(text) => handleHashtagPage(text)}>
-                    {post.description}
-                    </Tagify>
-                    </Description>}
-                <LinkContainer 
-                    onClick={() => window.open(urlInfo.url, '_blank')} 
-                    urlInfo={urlInfo} 
-                    setUrlInfo={setUrlInfo}
-                    data-test = "link"
-                />
-            </PostInfoContainer>
-        </PostContainerr>
-        }
-        </>   
+                <PostContainerr data-test="post">
+                    <UserImgContainer>
+                        <ProfileImg src={post.image} />
+                        <Likes postid={post.postId} userid={userId} />
+                    </UserImgContainer>
+                    <PostInfoContainer>
+                        <Container>
+                            <User data-test="username">{post.userName}</User>
+                            {Number(userId) === post.userId ?
+                                <div>
+                                    <MdEdit style={editStyle} onClick={editt} data-test="edit-btn" />
+                                    <RiDeleteBin7Fill style={deleteStyle} onClick={confirmDeletion} data-test="delete-btn" />
+                                </div>
+                                :
+                                ''}
+                        </Container>
+                        {edit ?
+                            <TextInput
+                                disabled={disabled}
+                                ref={textAreaRef}
+                                height='60px'
+                                type='text'
+                                placeholder="Description"
+                                value={description}
+                                onChange={e => setDescription(e.target.value)}
+                                onKeyUp={handleTextareaKeyPress}
+                                data-test="edit-input"
+
+                            />
+                            :
+                            <Description data-test="description">
+                                <Tagify tagStyle={{ fontWeight: 'bold' }} onClick={(text) => handleHashtagPage(text)}>
+                                    {post.description}
+                                </Tagify>
+                            </Description>}
+                        <LinkContainer
+                            onClick={() => window.open(urlInfo.url, '_blank')}
+                            urlInfo={urlInfo}
+                            setUrlInfo={setUrlInfo}
+                            data-test="link"
+                        />
+                        <CommentContainer postid={post.postId} userid={userId} />
+                    </PostInfoContainer>
+
+                </PostContainerr>
+            }
+        </>
     )
 }
 
@@ -161,7 +164,7 @@ const PostContainerr = styled.div`
     padding: 15px;
     position: relative;
     margin-bottom: 10px;
-    height: 100%;
+    min-height: 100%;
 `
 const UserImgContainer = styled.div`
     display: flex;
