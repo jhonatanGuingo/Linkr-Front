@@ -7,13 +7,14 @@ export default function SideBarHashtags(props){
     const [trending, setTrending] = useState([]);
     const {newPost} = props;
     useEffect(() => {
-        const url = `${process.env.REACT_APP_API_URL}hashtag`
+        const url = `${process.env.REACT_APP_API_URL}/hashtag`
         axios.get(url)
                 .then(resp => {
                     console.log(resp.data)
                     setTrending(resp.data);
                 })
                 .catch(err => {
+                    console.log(process.env.REACT_APP_API_URL)
                     console.log(err)
                 })
     }, [newPost])

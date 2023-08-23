@@ -17,7 +17,6 @@ export default function Overlay(){
     function deletePost(event){
         setLoading(true)
         event.preventDefault()
-        console.log(postToDelete)
         const url = `${process.env.REACT_APP_API_URL}posts/${postToDelete}`
         const config = {headers: {'Authorization': `Bearer ${token}`}};
         axios.delete(url, config)

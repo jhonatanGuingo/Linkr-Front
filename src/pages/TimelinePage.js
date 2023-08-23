@@ -9,6 +9,8 @@ import axios from "axios";
 import Overlay from "../components/Overlay";
 import { DeleteContext } from "../context/DeleteContext";
 import { EditContext } from "../context/EditContext";
+import NewPostsConatiner from "../components/NewPostsContainer";
+import dayjs from "dayjs";
 
 export default function TimelinePage() {
     const token = localStorage.getItem("token");
@@ -24,8 +26,9 @@ export default function TimelinePage() {
     const [hashtagsEncontradas, setHashtagsEncontradas] = useState();
     const {deleted, setDeleted, deleteButtonClicked, setDeleteButtonClicked} = useContext(DeleteContext)
     const {edited, setEdited, newPost, setNewPost} = useContext(EditContext)
-    
 
+    const [timestamp, setTimestamp] = useState('')
+    const [refresh, setRefresh] = useState(false)
 
     useEffect(() => {
         if (!token) {
@@ -37,18 +40,15 @@ export default function TimelinePage() {
         axios.get(url)
             .then(resp => {
                 console.log(resp.data)
-                if(posts !== resp.data){
-                    setPosts(resp.data)
-                }
+                console.log(Date.now())
+                setTimestamp(Date.now())
+                setPosts(resp.data)
                 verificarHashtagsNaPostagem()
             })
             .catch(err => {
                 console.log(err)
             })
-      
-        window.addEventListener('scroll', handleScroll)
-        return () => {window.removeEventListener('scroll', handleScroll)}
-    }, [postPosted, deleted, edited])
+    }, [postPosted, deleted, edited, refresh])
 
     function verificarHashtags(texto) {
 
@@ -66,15 +66,12 @@ export default function TimelinePage() {
 
     function verificarHashtagsNaPostagem() {
        
-        console.log(postId);
-       
         if(newPost.description != null ){
            
             const texto = newPost.description;
             //const postId = newPost.id;
             const hashtags = verificarHashtags(texto);
             setHashtagsEncontradas(hashtags);
-            console.log(hashtags, "oidnv")
             handleAddHashtags(hashtags);
         }
     
@@ -85,7 +82,6 @@ export default function TimelinePage() {
 
         function handleAddHashtags(hashtags){
             const url = `${process.env.REACT_APP_API_URL}hashtag`
-            console.log(hashtags,"handdle")
             axios.post(url, hashtags)
             .then(resp => {
                 console.log(resp.data)
@@ -95,26 +91,6 @@ export default function TimelinePage() {
                 console.log(err)
             })
           }
-
-    function handleScroll(){
-        if(window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight){
-            setLoading(true)
-            console.log('oi')
-            const auxx = page + 1
-            const url = `${process.env.REACT_APP_API_URL}posts/${auxx}`
-            axios.get(url)
-            .then(resp => {
-                if(posts.length < resp.data.length){
-                    setPosts(resp.data)
-                    setPage(auxx)
-                    setTimeout(()=>setLoading(false), 10000)
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        }
-    }
 
       
     
@@ -154,13 +130,13 @@ export default function TimelinePage() {
                     setNewPost = {setNewPost}
                     setPostId = {setPostId}
                 />
+
+                <NewPostsConatiner timestamp={timestamp} setTimestamp={setTimestamp} refresh={refresh} setRefresh={setRefresh} /> 
                 
                 {posts.map(post => (
                 <PostContainer key= {post.postId} post={post} posts={posts}/>)
                 )}
-                 <SideBarHashtags newPost = {newPost} postPosted = {postPosted} deleted =  {deleted} edited = {edited} /> 
-
-                {loading ? <h1>Loading</h1> : ''}
+                <SideBarHashtags newPost = {newPost} postPosted = {postPosted} deleted =  {deleted} edited = {edited} /> 
                 
                 
             </TimelineContainer >
