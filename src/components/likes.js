@@ -36,7 +36,6 @@ export default function Likes(props) {
     useEffect(() => {
         const promise = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}/${props.userid}`)
             .then((res) => {
-                console.log(res.data)
                 setData(res.data.likesNumber);
                 setLiked(res.data.likeUsers);
             })
@@ -59,7 +58,8 @@ export default function Likes(props) {
                             data && (
                                 <p> Curtido por: 
                                     {liked
-                                        ? 'Eu'
+                                        ? data.count > 1 ? 
+                                        `Eu e ${data.lastLikes[1].name}` : 'Eu'
                                         : data.count > 2
                                             ? ` ${data.lastLikes[0]}, ${data.lastLikes[1]} e outras ${data.count - 2
                                             } pessoas`
