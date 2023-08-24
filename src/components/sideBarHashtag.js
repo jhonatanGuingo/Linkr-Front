@@ -45,12 +45,16 @@ const ContainerSideBar = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    right: 40px;
+    right: -70px;
+    top: -72px;
     margin-top: 220px;
     background-color: #171717;
     border-radius: 16px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-   
+   a{
+    margin-left: 10px;
+    color: white;
+   }
     div{
         margin-bottom: 22px;
         height: 60px;
@@ -68,5 +72,6 @@ const ContainerSideBar = styled.div`
             line-height: normal;
 
         }
+
     }
 `

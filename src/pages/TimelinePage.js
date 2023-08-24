@@ -153,7 +153,6 @@ const TimelinePageContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    position: relative;
     height: 100vh;
 `
 
@@ -166,7 +165,7 @@ const TimelineContainer = styled.div`
     align-items: flex-start;
     width: 920px;
     margin-top: 72px;
-    
+    position: relative;
     h1{
         font-family: 'Oswald';
         //background-color: blue;
