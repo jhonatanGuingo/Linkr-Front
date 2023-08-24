@@ -21,6 +21,7 @@ export default function PostContainer(props) {
     const [edit, setEdit] = useState(false)
     const [description, setDescription] = useState(post.description)
     const [disabled, setDisabled] = useState(false)
+    const [showComments,setShowComments] = useState(false);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const textAreaRef = useRef();
@@ -90,7 +91,7 @@ export default function PostContainer(props) {
                 <PostContainerr data-test="post">
                     <UserImgContainer>
                         <ProfileImg src={post.image} />
-                        <Likes postid={post.postId} userid={userId} />
+                        <Likes postid={post.postId} userid={userId} setShowComments={setShowComments} showComments={showComments} />
                     </UserImgContainer>
                     <PostInfoContainer>
                         <Container>
@@ -128,7 +129,11 @@ export default function PostContainer(props) {
                             setUrlInfo={setUrlInfo}
                             data-test="link"
                         />
-                        <CommentContainer postid={post.postId} userid={userId} />
+                    {showComments && 
+                        <Comments>
+                            <CommentContainer postid={post.postId} userid={userId} />
+                        </Comments>
+                    }
                     </PostInfoContainer>
 
                 </PostContainerr>
@@ -226,5 +231,12 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+`
+
+const Comments = styled.div`
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: clip;
     width: 100%;
 `

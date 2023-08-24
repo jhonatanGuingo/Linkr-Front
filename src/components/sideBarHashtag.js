@@ -45,7 +45,7 @@ const ContainerSideBar = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    right: 22%;
+    right: 40px;
     margin-top: 220px;
     background-color: #171717;
     border-radius: 16px;
