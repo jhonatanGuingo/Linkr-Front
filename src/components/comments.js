@@ -8,14 +8,19 @@ export default function CommentContainer(props) {
 
     const [text, setText] = useState('');
     const [data, setData] = useState([]);
+    const [image , setImage] = useState('');
+
 
     useEffect(()=>{
         getCom(props.postid);
+        const hold = localStorage.getItem('image');
+        setImage(hold);
     },[])
 
     function getCom(postid){
         const promisse = axios.get(`${process.env.REACT_APP_API_URL}${postid}`)
         .then((res)=>{
+            console.log(res.data)
             setData(res.data)
         })
         .catch((res)=>{
@@ -36,8 +41,8 @@ export default function CommentContainer(props) {
     }
 
     return (<>
-    {data.map((comment) => (
-        <Comment>
+    {data && data.map((comment) => (
+        <Comment key={comment.id}>
             <ProfileImg src={comment.image} />
             <TextCont>
                 <h2>{comment.name}</h2>
@@ -47,7 +52,7 @@ export default function CommentContainer(props) {
     ))}
         {/* Postar comentário */}
         <Comment>
-            <ProfileImg src='' />
+            <ProfileImg src={image} />
             <WriteComment>
                 <TextInput placeholder='write a comment' value={text} onChange={(e) => setText(e.target.value)} />
                 <Send onClick={handleSubmit}><FiSend /></Send>
@@ -64,6 +69,7 @@ const Comment = styled.div`
     display: flex;
     align-items: center;
     border-bottom: 2px solid #353535;
+    padding: 5px;
 `;
 
 const ProfileImg = styled.img`

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart,AiOutlineComment } from 'react-icons/ai';
 import { styled } from 'styled-components';
 
 export default function Likes(props) {
@@ -8,6 +8,7 @@ export default function Likes(props) {
     const [liked, setLiked] = useState(false);
     const [ballon, setBallon] = useState(false);
     const [data, setData] = useState([])
+    const [ comscount, setComscount] = useState('0')
 
     function handleClick(bool) {
         const config ={
@@ -42,11 +43,18 @@ export default function Likes(props) {
             .catch((res) => {
                 console.log(res)
             })
+        const coms = axios.get(`${process.env.REACT_APP_API_URL}${props.postid}`)
+            .then((res)=>{
+                setComscount(res.data)
+            })
+            .catch((res)=>{
+                alert(res);
+            })
     }, [])
 
     return (
-        <Container onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)}>
-            <HeartIconWrapper >
+        <Container >
+            <HeartIconWrapper onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)}>
                 {liked ? (
                     <AiFillHeart style={{ color: 'red' }} onClick={() => handleClick(false)} />
                 ) : (
@@ -73,6 +81,10 @@ export default function Likes(props) {
                 )}
             </HeartIconWrapper>
             <p>{data.count} likes</p>
+            <HeartIconWrapper onClick={() => props.setShowComments(!props.showComments)}>
+                <AiOutlineComment style={{ color: 'white' }} />
+            </HeartIconWrapper>
+            <p>{comscount.length} comments</p>
         </Container>
     );
 }
@@ -99,12 +111,13 @@ const Container = styled.div`
 const HeartIconWrapper = styled.div`
     position: relative;
     cursor: pointer;
+    margin-top: 20px;
 `;
 
 
 const Ballon = styled.div`
     position: absolute;
-    top: 70px;
+    top: 40px;
     left: 50%;
     width: 169px;
     transform: translateX(-50%);
