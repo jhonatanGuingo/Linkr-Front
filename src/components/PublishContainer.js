@@ -24,7 +24,6 @@ export default function PublishContainer(props){
         }
         axios.post(url, body, config)
             .then(resp => {
-                console.log(resp.data, 'resp')
                 const aux = !postPosted
                 setPostId(resp.data);
                 setPostPosted(aux)

@@ -11,6 +11,7 @@ import { DeleteContext } from "../context/DeleteContext";
 import { EditContext } from "../context/EditContext";
 import NewPostsConatiner from "../components/NewPostsContainer";
 import dayjs from "dayjs";
+import InfiniteScroll from "react-infinite-scroll-component"
 
 export default function TimelinePage() {
     const token = localStorage.getItem("token");
@@ -21,7 +22,7 @@ export default function TimelinePage() {
     const [postPosted, setPostPosted] = useState(false)
     const [link, setLink] = useState('')
     const [description, setDescription] = useState('')
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(2)
     const [loading, setLoading] = useState(false)
     const [hashtagsEncontradas, setHashtagsEncontradas] = useState();
     const {deleted, setDeleted, deleteButtonClicked, setDeleteButtonClicked} = useContext(DeleteContext)
@@ -30,17 +31,18 @@ export default function TimelinePage() {
     const [timestamp, setTimestamp] = useState('')
     const [refresh, setRefresh] = useState(false)
 
+    const [hasMore, setHasMore] = useState(true)
+
     useEffect(() => {
         if (!token) {
             alert("É necessário estar logado para prosseguir");
             navigate("/");
             return;
         }
-        const url = `${process.env.REACT_APP_API_URL}posts/${page}`
+        const url = `${process.env.REACT_APP_API_URL}posts/1`
         axios.get(url)
             .then(resp => {
                 console.log(resp.data)
-                console.log(Date.now())
                 setTimestamp(Date.now())
                 setPosts(resp.data)
                 verificarHashtagsNaPostagem()
@@ -48,7 +50,37 @@ export default function TimelinePage() {
             .catch(err => {
                 console.log(err)
             })
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
     }, [postPosted, deleted, edited, refresh])
+
+    function fetchMoreData(){
+        const url = `${process.env.REACT_APP_API_URL}posts/${page}`
+        console.log(url)
+        axios.get(url)
+            .then(resp => {
+                console.log([...posts, ...resp.data])
+                const aux = page + 1
+                setPage(aux)
+                setHasMore(false)
+                if(resp.data.length > 0){
+                    setHasMore(true)
+                    setPosts([...posts, ...resp.data])
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    function handleScroll(){
+        if(window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight){
+            fetchMoreData();
+        }
+    }
+
 
     function verificarHashtags(texto) {
 
@@ -119,25 +151,32 @@ export default function TimelinePage() {
             <TimelineContainer>  
 
                 <h1>timeline</h1>
-                 
-                <PublishContainer 
-                    link={link} 
-                    setLink={setLink} 
-                    description={description} 
-                    setDescription={setDescription}
-                    postPosted={postPosted} 
-                    setPostPosted={setPostPosted}
-                    setNewPost = {setNewPost}
-                    setPostId = {setPostId}
-                />
 
-                <NewPostsConatiner timestamp={timestamp} setTimestamp={setTimestamp} refresh={refresh} setRefresh={setRefresh} /> 
-                
-                {posts.map(post => (
-                <PostContainer key= {post.postId} post={post} posts={posts}/>)
-                )}
-                <SideBarHashtags newPost = {newPost} postPosted = {postPosted} deleted =  {deleted} edited = {edited} /> 
-                
+                <InfiniteScroll
+                    dataLength={posts.length}
+                    next={fetchMoreData}
+                    hasMore={hasMore}
+                    loader={<h1>Loading...</h1>}
+                >
+                    <SideBarHashtags newPost = {newPost} postPosted = {postPosted} deleted =  {deleted} edited = {edited} /> 
+                    <PublishContainer 
+                        link={link} 
+                        setLink={setLink} 
+                        description={description} 
+                        setDescription={setDescription}
+                        postPosted={postPosted} 
+                        setPostPosted={setPostPosted}
+                        setNewPost = {setNewPost}
+                        setPostId = {setPostId}
+                    />
+
+                    <NewPostsConatiner timestamp={timestamp} setTimestamp={setTimestamp} refresh={refresh} setRefresh={setRefresh} /> 
+                    
+                    {posts.map(post => (
+                    <PostContainer key= {post.postId} post={post} posts={posts}/>)
+                    )}
+                    
+                </InfiniteScroll>
                 
             </TimelineContainer >
             
