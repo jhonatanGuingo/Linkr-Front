@@ -9,29 +9,26 @@ export default function NewPostsConatiner(props){
 
     const {timestamp, setTimestamp, refresh, setRefresh} = props
 
-    console.log(dayjs(Number(timestamp)).format('YYYY-MM-DD HH:mm:ss'))
-
     const userId = localStorage.getItem("userId")
 
     const [newPosts, setNewPosts] = useState(0)
 
     
     useEffect(() => {
-        const url = `${process.env.REACT_APP_API_URL}newposts/${timestamp}/${userId}`
+        const url = `${process.env.REACT_APP_API_URL}newposts/${Number(timestamp) + 10800000}/${userId}`
         axios.get(url)
             .then(resp => {
-                console.log(resp.data)
                 setNewPosts(resp.data.numNewPosts)
             })
             .catch(err => {
                  console.log(err)
             })
         const interval = setInterval(() => {
-            const url = `${process.env.REACT_APP_API_URL}newposts/${timestamp}/${userId}`
-            console.log(dayjs(Number(timestamp)).format('YYYY-MM-DD HH:mm:ss'))//não muda com a variável de estado
+            const url = `${process.env.REACT_APP_API_URL}newposts/${Number(timestamp) + 10800000}/${userId}`
+            //console.log(dayjs(Number(timestamp)).format('YYYY-MM-DD HH:mm:ss'))
             axios.get(url)
                 .then(resp => {
-                    console.log(resp.data)
+                    //console.log(resp.data)
                     setNewPosts(resp.data.numNewPosts)
                 })
                 .catch(err => {
@@ -40,7 +37,7 @@ export default function NewPostsConatiner(props){
         }, 5000);
 
         return () => clearInterval(interval);
-    },[timestamp])
+    },[timestamp, refresh])
 
     function loadMore(){
         const aux = !refresh
