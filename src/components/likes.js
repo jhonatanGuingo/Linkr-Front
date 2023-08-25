@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { AiOutlineHeart, AiFillHeart,AiOutlineComment } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { styled } from 'styled-components';
 
 export default function Likes(props) {
@@ -8,30 +8,30 @@ export default function Likes(props) {
     const [liked, setLiked] = useState(false);
     const [ballon, setBallon] = useState(false);
     const [data, setData] = useState([])
-    const [ comscount, setComscount] = useState('0')
+    const [comscount, setComscount] = useState('0')
 
     function handleClick(bool) {
-        const config ={
+        const config = {
             userid: props.userid,
             postid: props.postid,
             bool: bool
         }
-        const promise = axios.post(`${process.env.REACT_APP_API_URL}likes/`,config)
-        .then((resa)=>{
-            console.log(resa)
-            const likestatus = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}/${props.userid}`)
-            .then((res) => {
-                console.log(res.data)
-                setData(res.data.likesNumber);
-                setLiked(res.data.likeUsers);
+        const promise = axios.post(`${process.env.REACT_APP_API_URL}likes/`, config)
+            .then((resa) => {
+                console.log(resa)
+                const likestatus = axios.get(`${process.env.REACT_APP_API_URL}likes/${props.postid}/${props.userid}`)
+                    .then((res) => {
+                        console.log(res.data)
+                        setData(res.data.likesNumber);
+                        setLiked(res.data.likeUsers);
+                    })
+                    .catch((res) => {
+                        console.log(res)
+                    })
             })
             .catch((res) => {
-                console.log(res)
+                alert(res)
             })
-        })
-        .catch((res)=>{
-            alert(res)
-        })
     }
 
     useEffect(() => {
@@ -44,10 +44,10 @@ export default function Likes(props) {
                 console.log(res)
             })
         const coms = axios.get(`${process.env.REACT_APP_API_URL}${props.postid}`)
-            .then((res)=>{
+            .then((res) => {
                 setComscount(res.data)
             })
-            .catch((res)=>{
+            .catch((res) => {
                 alert(res);
             })
     }, [])
@@ -55,19 +55,22 @@ export default function Likes(props) {
     return (
         <Container >
             <HeartIconWrapper onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)}>
-                {liked ? (
-                    <AiFillHeart style={{ color: 'red' }} onClick={() => handleClick(false)} data-test="like-btn" />
-                ) : (
-                    <AiOutlineHeart style={{ color: 'white' }} onClick={() => handleClick(true)} data-test="like-btn" />
-                )}
+
+                <HeartIcon liked={liked}>
+                    {liked ? (
+                        <AiFillHeart onClick={() => handleClick(false)} data-test="like-btn" />
+                    ) : (
+                        <AiOutlineHeart onClick={() => handleClick(true)} data-test="like-btn" />
+                    )}
+                </HeartIcon>
                 {ballon && (
-                    <Ballon  data-test="tooltip">
+                    <Ballon data-test="tooltip">
                         {
                             data && (
-                                <p> Curtido por: 
+                                <p> Curtido por:
                                     {liked
-                                        ? data.count > 1 ? 
-                                        `Eu e ${data.lastLikes[1].name}` : 'Eu'
+                                        ? data.count > 1 ?
+                                            `Eu e ${data.lastLikes[1].name}` : 'Eu'
                                         : data.count > 2
                                             ? ` ${data.lastLikes[0]}, ${data.lastLikes[1]} e outras ${data.count - 2
                                             } pessoas`
@@ -82,7 +85,7 @@ export default function Likes(props) {
             </HeartIconWrapper>
             <p data-test="counter">{data.count} likes</p>
             <HeartIconWrapper onClick={() => props.setShowComments(!props.showComments)} data-test="comment-btn">
-                <AiOutlineComment style={{ color: 'white' }} />
+                <CommentIcon showComments={props.showComments} />
             </HeartIconWrapper>
             <p data-test="comment-counter" >{comscount.length} comments</p>
         </Container>
@@ -112,6 +115,8 @@ const HeartIconWrapper = styled.div`
     position: relative;
     cursor: pointer;
     margin-top: 20px;
+    height: 20px;
+    display: flex;
 `;
 
 
@@ -142,4 +147,17 @@ const Ballon = styled.div`
         color: black;
 
     }
+`;
+
+const CommentIcon = styled(AiOutlineComment)`
+    color: ${props => props.showComments ? 'black' : 'white'};
+    background-color: ${props => props.showComments ? 'white' : 'transparent'};
+    border-radius: 30px;
+    transition: color 0.6s ease, background-color 0.6s ease, border-radius 0.3s ease;
+
+`;
+
+const HeartIcon = styled.div`
+    color: ${props => props.liked ? 'red' : 'white'};
+    transition: color 0.6s ease;
 `;

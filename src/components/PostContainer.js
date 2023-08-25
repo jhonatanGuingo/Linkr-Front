@@ -90,12 +90,12 @@ export default function PostContainer(props) {
                 :
                 <PostContainerr data-test="post">
                     <UserImgContainer>
-                        <ProfileImg src={post.image} />
+                        <ProfileImg src={post.image} onClick={()=>{navigate(`/user/${post.userId}`)}}/>
                         <Likes postid={post.postId} userid={userId} setShowComments={setShowComments} showComments={showComments} />
                     </UserImgContainer>
                     <PostInfoContainer>
                         <Container>
-                            <User data-test="username">{post.userName}</User>
+                            <User data-test="username" onClick={()=>{navigate(`/user/${post.userId}`)}}>{post.userName}</User>
                             {Number(userId) === post.userId ?
                                 <div>
                                     <MdEdit style={editStyle} onClick={editt} data-test="edit-btn" />
@@ -169,7 +169,7 @@ const PostContainerr = styled.div`
     padding: 15px;
     position: relative;
     margin-bottom: 10px;
-    min-height: 100%;
+    min-height: 250px;
 `
 const UserImgContainer = styled.div`
     display: flex;

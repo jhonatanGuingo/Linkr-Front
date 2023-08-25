@@ -51,7 +51,7 @@ export default function CommentContainer(props) {
         </Comment>
     ))}
         {/* Postar comentário */}
-        <Comment>
+        <Comment style={{border: 'none'}}>
             <ProfileImg src={image} />
             <WriteComment>
                 <TextInput placeholder='write a comment' value={text} onChange={(e) => setText(e.target.value)} data-test="comment-input" />
@@ -65,10 +65,10 @@ export default function CommentContainer(props) {
 const Comment = styled.div`
     background-color: #1E1E1E;
     width: 100%;
-    height: 80px;
+    min-height: 65px;
     display: flex;
     align-items: center;
-    border-bottom: 2px solid #353535;
+    border-bottom: 1px solid #353535;
     padding: 5px;
 `;
 
@@ -77,6 +77,7 @@ const ProfileImg = styled.img`
     height: 39px;
     border-radius: 30px;
     margin-right: 20px;
+    margin-left: 10px;
 `;
 
 const TextCont = styled.div`
@@ -111,7 +112,7 @@ const TextInput = styled.input`
 `;
 
 const WriteComment = styled.div`
-    width: 87%;
+    width: 84%;
     height: 39px;
     background-color: #252525;
     display: flex;

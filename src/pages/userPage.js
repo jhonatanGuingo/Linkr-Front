@@ -3,23 +3,36 @@ import Header from "../components/Header"
 import PostContainer from "../components/PostContainer"
 import { useEffect, useState } from "react"
 import SideBarHashtags from "../components/sideBarHashtag";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 
 export default function UserPage() {
 
     const [posts, setPosts] = useState([]);
     const [user , setUser ] = useState([])
+    const userId = useParams('id');
 
-    useEffect(() => { setPosts(['post']) }, [])
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}userposts/${userId.id}`)
+        .then((res)=>{
+            setPosts(res.data);
+            setUser({name:res.data[0].userName,image:res.data[0].image});
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+     }, [])
 
 
     return (
         <Page>
             <Header />
             <TimelineContainer>
-                <h1>{user && user.name}</h1>
-                {posts.map(post => (
-                    <PostContainer post={post} />)
+            <UserContainer><ProfileImg src={user.image} /> <h2>{user.name}'s posts</h2></UserContainer>
+                
+                {posts.map((post,index) => (
+                    <PostContainer key={index} post={post} />)
                 )}
             </TimelineContainer>
             <SideBarHashtags />
@@ -56,8 +69,23 @@ const TimelineContainer = styled.div`
     }
 `
 
+const ProfileImg = styled.img`
+    width: 55px;
+    height: 55px;
+    border-radius: 30px;
+    margin-right: 10px;
+`
 
-const UserIcon = styled.img`
-    border-radius: 1000px;
-    height: 50px;
+const UserContainer = styled.div`
+    display: flex;
+    align-items: center;
+    height: 55px;
+    justify-content: start;
+    margin-bottom: 60px;
+   h2{
+        font-family: 'Oswald';;
+        font-weight: 700;
+        font-size: 43px;
+        color: white;
+   }
 `
