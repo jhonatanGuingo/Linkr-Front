@@ -42,7 +42,7 @@ export default function CommentContainer(props) {
 
     return (<>
     {data && data.map((comment) => (
-        <Comment key={comment.id}>
+        <Comment key={comment.id}  data-test="comment">
             <ProfileImg src={comment.image} />
             <TextCont>
                 <h2>{comment.name}</h2>
@@ -54,8 +54,8 @@ export default function CommentContainer(props) {
         <Comment>
             <ProfileImg src={image} />
             <WriteComment>
-                <TextInput placeholder='write a comment' value={text} onChange={(e) => setText(e.target.value)} />
-                <Send onClick={handleSubmit}><FiSend /></Send>
+                <TextInput placeholder='write a comment' value={text} onChange={(e) => setText(e.target.value)} data-test="comment-input" />
+                <Send onClick={handleSubmit} data-test="comment-submit"><FiSend /></Send>
             </WriteComment>
         </Comment>
     </>
