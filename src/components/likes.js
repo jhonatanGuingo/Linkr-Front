@@ -55,6 +55,7 @@ export default function Likes(props) {
     return (
         <Container >
             <HeartIconWrapper onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)}>
+
                 <HeartIcon liked={liked}>
                     {liked ? (
                         <AiFillHeart onClick={() => handleClick(false)} data-test="like-btn" />
