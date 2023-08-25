@@ -130,7 +130,7 @@ export default function PostContainer(props) {
                             data-test="link"
                         />
                     {showComments && 
-                        <Comments>
+                        <Comments data-test="comment-box">
                             <CommentContainer postid={post.postId} userid={userId} />
                         </Comments>
                     }

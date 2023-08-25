@@ -56,12 +56,12 @@ export default function Likes(props) {
         <Container >
             <HeartIconWrapper onMouseEnter={() => setBallon(true)} onMouseLeave={() => setBallon(false)}>
                 {liked ? (
-                    <AiFillHeart style={{ color: 'red' }} onClick={() => handleClick(false)} />
+                    <AiFillHeart style={{ color: 'red' }} onClick={() => handleClick(false)} data-test="like-btn" />
                 ) : (
-                    <AiOutlineHeart style={{ color: 'white' }} onClick={() => handleClick(true)} />
+                    <AiOutlineHeart style={{ color: 'white' }} onClick={() => handleClick(true)} data-test="like-btn" />
                 )}
                 {ballon && (
-                    <Ballon>
+                    <Ballon  data-test="tooltip">
                         {
                             data && (
                                 <p> Curtido por: 
@@ -80,11 +80,11 @@ export default function Likes(props) {
                     </Ballon>
                 )}
             </HeartIconWrapper>
-            <p>{data.count} likes</p>
-            <HeartIconWrapper onClick={() => props.setShowComments(!props.showComments)}>
+            <p data-test="counter">{data.count} likes</p>
+            <HeartIconWrapper onClick={() => props.setShowComments(!props.showComments)} data-test="comment-btn">
                 <AiOutlineComment style={{ color: 'white' }} />
             </HeartIconWrapper>
-            <p>{comscount.length} comments</p>
+            <p data-test="comment-counter" >{comscount.length} comments</p>
         </Container>
     );
 }
